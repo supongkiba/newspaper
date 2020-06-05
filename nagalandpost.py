@@ -14,11 +14,15 @@ def QueryNagalandPost(keywords):
         
         # List of <span> tags witl class="nstryspanr"
         linksEle = soup.find_all('span', class_='nstryspanr')
-        for link in linksEle:
-            # Extract the child <a> element
-            link = link.findChildren("a" , recursive=False)
-            # Extract the href attribute value
-            extracted_link.append(link[0]['href'])
+        if len(linksEle) == 0:
+            print(f'No results found for "{keyword}"\n')
+        else:
+            print(f' -Found {str(len(linksEle))} results\n')
+            for link in linksEle:
+                # Extract the child <a> element
+                link = link.findChildren("a" , recursive=False)
+                # Extract the href attribute value
+                extracted_link.append(link[0]['href'])
 
     # Removing duplicates
     extracted_link = set(extracted_link)
