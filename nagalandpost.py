@@ -12,7 +12,7 @@ def QueryNagalandPost(keywords):
         data = requests.get(url).content
         soup = BeautifulSoup(data, 'html.parser')
         
-        # List of <span> tags witl class="nstryspanr"
+        # List of <span> tags with class="nstryspanr"
         linksEle = soup.find_all('span', class_='nstryspanr')
         if len(linksEle) == 0:
             print(f'No results found for "{keyword}"\n')
@@ -26,6 +26,8 @@ def QueryNagalandPost(keywords):
 
     # Removing duplicates
     extracted_link = set(extracted_link)
+    
+    print(f'Found {str(len(extracted_link))} unique Articles!\n\n')
     
     return extracted_link
 
