@@ -11,7 +11,7 @@ def QueryNagalandPage(category):
         data = requests.get(url).content
         soup = BeautifulSoup(data, 'html.parser')
         
-        # List of <div> tags with class="nstryspanr"
+        # List of <div> tags with class="post-title-wrapper"
         linksEle = soup.find_all('div', class_='post-title-wrapper')
         for link in linksEle:
             # Extract the child <a> element
