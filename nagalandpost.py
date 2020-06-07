@@ -1,7 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup
-from newspaper import Article
+from helper import keywords, ArticleDownload
 
 def QueryNagalandPost(keywords):
     extracted_link = []
@@ -22,7 +22,7 @@ def QueryNagalandPost(keywords):
                 # Extract the child <a> element
                 link = link.findChildren("a" , recursive=False)
                 # Extract the href attribute value
-                extracted_link.append(link[0]['href'])
+                extracted_link.append(f'http://www.nagalandpost.com{link[0]["href"]}')
 
     # Removing duplicates
     extracted_link = set(extracted_link)
@@ -32,24 +32,11 @@ def QueryNagalandPost(keywords):
     return extracted_link
 
 
-def DownloadArticle(links):
-    newsContent = {'data': []}
-    for url in links:
-        url = f'http://www.nagalandpost.com/{url}'
-        print(f'-Downloading "{url}"')
-        article = Article(url)
-        article.download()
-        article.parse()
-        newsContent['data'].append({'title': article.title, 'url': url, 'text_content': article.text})
-    return newsContent
-
-
 if __name__=="__main__":
     # List of Keyword to look up
-    keywords = ['nnc', 'Naga National movement','Simon commission', 'Naga political history', 'naga independence', "Armed forces act", '1958']
-    
+    keywords = keywords()
     links = QueryNagalandPost(keywords)
-    contents = DownloadArticle(links)
+    contents = ArticleDownload(links, keywords)
     
     # Write result to a file
     with open("nagaland_post.json", "w", encoding="utf8") as file: 
