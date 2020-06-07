@@ -2,7 +2,6 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from helper import keywords, ArticleDownload
-from newspaper import Article
 
 
 def getLinks(category):
